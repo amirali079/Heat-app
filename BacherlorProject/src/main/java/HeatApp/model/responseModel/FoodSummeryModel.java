@@ -26,11 +26,28 @@ public class FoodSummeryModel {
 
         this.eaten = false;
 
-        Nutrient temp = null;
-        for (Nutrient n : nutrients)
-            if (n.getName().equals("Calories"))
-                temp = n;
-        this.calorie = temp;
+        Nutrient calorieTemp = null, fatTemp = null, carbohydratesTemp = null, proteinTemp = null;
+        for (Nutrient n : nutrients) {
+            switch (n.getName()) {
+                case "Calories":
+                    calorieTemp = n;
+                    break;
+                case "Fat":
+                    fatTemp = n;
+                    break;
+                case "Carbohydrates":
+                    carbohydratesTemp = n;
+                    break;
+                case "Protein":
+                    proteinTemp = n;
+                    break;
+            }
+        }
+
+        this.calorie = calorieTemp;
+        this.fat = fatTemp;
+        this.carbohydrates = carbohydratesTemp;
+        this.protein = proteinTemp;
     }
 
     Integer id;
@@ -42,6 +59,9 @@ public class FoodSummeryModel {
     LocalDate localDate;
 
     Nutrient calorie;
+    Nutrient fat;
+    Nutrient carbohydrates;
+    Nutrient protein;
     Set<DietType> dietTypes;
     Set<Cuisine> cuisines;
     Set<MealType> mealTypes;
