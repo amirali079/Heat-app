@@ -1,5 +1,6 @@
 package HeatApp.service;
 
+import HeatApp.exception.UsernameExistException;
 import HeatApp.model.User;
 import HeatApp.exception.EntityNotFoundException;
 import HeatApp.exception.InvalidPasswordException;
@@ -10,6 +11,7 @@ import HeatApp.model.requestModel.UserPreferenceRequestModel;
 import HeatApp.model.requestModel.UserRegisterRequestModel;
 import HeatApp.model.responseModel.DayPlan;
 import HeatApp.model.responseModel.FoodSummeryModel;
+import HeatApp.model.responseModel.IsLikedResponseModel;
 import HeatApp.repository.FoodRepository;
 import HeatApp.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -30,29 +32,29 @@ public class UserServiceImpl implements UserService {
     private final FoodRepository foodRepository;
 
     @Override
-    public String addUser(UserRegisterRequestModel user) {
-//        Optional<User> loaded = userRepository.findByUsername(user.getUsername());
-//        if (loaded.isPresent())
-//            throw new UsernameExistException(user.getUsername());
+    public Integer addUser(UserRegisterRequestModel user) {
+        Optional<User> loaded = userRepository.findByUsername(user.getUsername());
+        if (loaded.isPresent())
+            throw new UsernameExistException(user.getUsername());
 
         User createdUser = User.builder().username(user.getUsername()).password(user.getPassword())
                 .email(user.getEmail()).build();
 
-        return userRepository.save(createdUser).getId().toString();
+        return userRepository.save(createdUser).getId();
     }
 
     @Override
-    public String loginUser(UserLoginRequestModel user) {
+    public Integer loginUser(UserLoginRequestModel user) {
         Optional<User> loaded = userRepository.findByUsername(user.getUsername());
         if (loaded.isEmpty())
             throw new EntityNotFoundException(User.class.getName(), user.getUsername());
         if (!loaded.get().getPassword().equals(user.getPassword()))
             throw new InvalidPasswordException();
-        return loaded.get().getId().toString();
+        return loaded.get().getId();
     }
 
     @Override
-    public String addUserPreference(UserPreferenceRequestModel user) {
+    public Integer addUserPreference(UserPreferenceRequestModel user) {
         User userLoaded = checkUserId(user.getId());
 
         UserPreference userPreference = UserPreference.builder()
@@ -64,7 +66,7 @@ public class UserServiceImpl implements UserService {
         userLoaded.setUserPreference(userPreference);
         userRepository.save(userLoaded);
 
-        return user.getId().toString();
+        return user.getId();
     }
 
     @Override
@@ -75,30 +77,34 @@ public class UserServiceImpl implements UserService {
 
         Set<Food> likedFood = user.getLikedFoods();
 
-        if (likedFood.contains(food))
+        String status="liked!";
+
+        if (likedFood.contains(food)){
             likedFood.remove(food);
+            status="unLiked!";
+        }
         else likedFood.add(food);
 
         user.setLikedFoods(likedFood);
         userRepository.save(user);
 
-        return "ok";
+        return status;
     }
 
     @Override
-    public Boolean isLikedFood(Integer userId, Integer foodId) {
+    public IsLikedResponseModel isLikedFood(Integer userId, Integer foodId) {
         User user = checkUserId(userId);
         Food food = checkFoodId(foodId);
 
         if (user.getLikedFoods().contains(food))
-            return true;
-        return false;
+            return new IsLikedResponseModel(true);
+        return new IsLikedResponseModel(false);
     }
 
     @Override
     public List<FoodSummeryModel> getFoodLikes(Integer userId) {
         User user = checkUserId(userId);
-        List foods = new ArrayList<FoodSummeryModel>();
+        List<FoodSummeryModel> foods = new ArrayList<>();
         user.getLikedFoods().forEach(food -> foods.add(food.summeryModel()));
         return foods;
     }

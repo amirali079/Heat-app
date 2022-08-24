@@ -31,8 +31,8 @@ public class FoodController {
     }
 
     @GetMapping("/search")
-    public List<FoodSummeryModel> getFoodLikes(@RequestBody SearchRequestModel searchRequestModel){
-        return foodService.findFood(searchRequestModel);
+    public ResponseEntity<List<FoodSummeryModel>> getFoodLikes(@RequestBody SearchRequestModel searchRequestModel){
+        return new ResponseEntity<>(foodService.findFood(searchRequestModel),HttpStatus.FOUND);
     }
 
 }
