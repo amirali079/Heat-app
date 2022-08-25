@@ -6,7 +6,7 @@ import HeatApp.model.enums.DietType;
 import HeatApp.model.enums.MealType;
 import HeatApp.model.requestModel.SearchRequestModel;
 import HeatApp.model.responseModel.FoodResponseModel;
-import HeatApp.model.responseModel.FoodSummeryModel;
+import HeatApp.model.responseModel.FoodSummaryModel;
 import HeatApp.repository.FoodRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class FoodServiceImpl implements FoodService{
     }
 
     @Override
-    public FoodSummeryModel getFoodSummeryInfo(Integer id) {
+    public FoodSummaryModel getFoodSummeryInfo(Integer id) {
         Optional<Food> food= foodRepository.findById(id);
         if (food.isEmpty())
             throw new EntityNotFoundException(Food.class.getName());
@@ -43,9 +43,9 @@ public class FoodServiceImpl implements FoodService{
     }
 
     @Override
-    public List<FoodSummeryModel> findFood(SearchRequestModel request) {
+    public List<FoodSummaryModel> findFood(SearchRequestModel request) {
 
-        List<FoodSummeryModel> foods = new ArrayList<>();
+        List<FoodSummaryModel> foods = new ArrayList<>();
         foodRepository.findAll().forEach(food -> foods.add(food.summeryModel()));
 
         if (!request.getCuisine().equals(Cuisine.NONE))

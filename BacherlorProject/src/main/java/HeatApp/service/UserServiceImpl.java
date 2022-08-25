@@ -10,7 +10,7 @@ import HeatApp.model.requestModel.UserLoginRequestModel;
 import HeatApp.model.requestModel.UserPreferenceRequestModel;
 import HeatApp.model.requestModel.UserRegisterRequestModel;
 import HeatApp.model.responseModel.DayPlan;
-import HeatApp.model.responseModel.FoodSummeryModel;
+import HeatApp.model.responseModel.FoodSummaryModel;
 import HeatApp.model.responseModel.IsLikedResponseModel;
 import HeatApp.repository.FoodRepository;
 import HeatApp.repository.UserRepository;
@@ -102,9 +102,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<FoodSummeryModel> getFoodLikes(Integer userId) {
+    public List<FoodSummaryModel> getFoodLikes(Integer userId) {
         User user = checkUserId(userId);
-        List<FoodSummeryModel> foods = new ArrayList<>();
+        List<FoodSummaryModel> foods = new ArrayList<>();
         user.getLikedFoods().forEach(food -> foods.add(food.summeryModel()));
         return foods;
     }

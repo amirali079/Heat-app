@@ -1,11 +1,10 @@
 package HeatApp.model.enums;
 
 public enum DietType {
-    ANY_THING,
     VEGETARIAN,
     VEGAN,
-    HALAL,
-    KOSHER,
+    NOT_HALAL,
+    NOT_KOSHER,
     DAIRY_FREE,
     GLUTEN_FREE,
     NONE

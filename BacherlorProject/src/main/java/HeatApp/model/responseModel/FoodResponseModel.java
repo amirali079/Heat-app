@@ -15,7 +15,7 @@ public class FoodResponseModel {
      Boolean veryHealthy;
      String title;
      String readyInMinute;
-     String summery;
+     String summary;
      String imageLink;
 
      Set<Cuisine> cuisines;

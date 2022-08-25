@@ -4,7 +4,7 @@ import HeatApp.model.enums.Cuisine;
 import HeatApp.model.enums.DietType;
 import HeatApp.model.enums.MealType;
 import HeatApp.model.responseModel.FoodResponseModel;
-import HeatApp.model.responseModel.FoodSummeryModel;
+import HeatApp.model.responseModel.FoodSummaryModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +31,8 @@ public class Food {
     private Boolean veryHealthy;
     private String title;
     private String readyInMinute;
-    private String summery;
+    @Column(length = 100000)
+    private String summary;
     private String imageLink;
 
     @ElementCollection(targetClass = Cuisine.class)
@@ -49,18 +50,22 @@ public class Food {
     @OneToMany
     private Set<InstructionStep> instructionSteps;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "food_ingredient",
+            joinColumns = @JoinColumn(name = "food_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private Set<Ingredient> ingredients;
 
     @OneToMany
     private Set<Nutrient> nutrients;
 
     public FoodResponseModel responseModel() {
-        return new FoodResponseModel(veryHealthy, title, readyInMinute, summery, imageLink, cuisines, mealTypes, dietTypes,
+        return new FoodResponseModel(veryHealthy, title, readyInMinute, summary, imageLink, cuisines, mealTypes, dietTypes,
                 instructionSteps, ingredients, nutrients);
     }
 
-    public FoodSummeryModel summeryModel(){
-        return new FoodSummeryModel(id,title,readyInMinute,imageLink,LocalDate.now(),nutrients,dietTypes,cuisines,mealTypes);
+    public FoodSummaryModel summeryModel(){
+        return new FoodSummaryModel(id,title,readyInMinute,imageLink,LocalDate.now(),nutrients,dietTypes,cuisines,mealTypes);
     }
 }

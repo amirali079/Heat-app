@@ -10,10 +10,10 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Value
-public class FoodSummeryModel {
+public class FoodSummaryModel {
 
 
-    public FoodSummeryModel(Integer id, String title, String readyInMinute, String imageLink, LocalDate localDate,
+    public FoodSummaryModel(Integer id, String title, String readyInMinute, String imageLink, LocalDate localDate,
                             Set<Nutrient> nutrients, Set<DietType> dietTypes, Set<Cuisine> cuisines, Set<MealType> mealTypes) {
         this.id = id;
         this.title = title;

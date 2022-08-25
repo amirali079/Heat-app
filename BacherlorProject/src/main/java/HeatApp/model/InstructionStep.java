@@ -21,5 +21,6 @@ public class InstructionStep {
     private Integer id;
 
     private Integer number;
+    @Column(length = 100000)
     private String step;
 }

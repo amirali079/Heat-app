@@ -4,10 +4,9 @@ import HeatApp.model.requestModel.UserPreferenceRequestModel;
 import HeatApp.model.requestModel.UserLoginRequestModel;
 import HeatApp.model.requestModel.UserRegisterRequestModel;
 import HeatApp.model.responseModel.DayPlan;
-import HeatApp.model.responseModel.FoodSummeryModel;
+import HeatApp.model.responseModel.FoodSummaryModel;
 import HeatApp.model.responseModel.IsLikedResponseModel;
 import HeatApp.service.UserService;
-import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +46,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}/foodLikes")
-    public ResponseEntity<List<FoodSummeryModel>> getFoodLikes(@PathVariable Integer id){
+    public ResponseEntity<List<FoodSummaryModel>> getFoodLikes(@PathVariable Integer id){
         return new ResponseEntity<>(userService.getFoodLikes(id),HttpStatus.FOUND);
     }
 

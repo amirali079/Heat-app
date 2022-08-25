@@ -16,11 +16,11 @@ import javax.persistence.*;
 public class Ingredient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
 
     private String name;
+    private String aisle;
     private String original;
     private String imageURL;
 

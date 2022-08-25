@@ -1,9 +1,9 @@
 package HeatApp.model.enums;
 
 public enum MealType {
-    ALL,
     BREAKFAST,
     MAIN_COURSE,
+    SIDE_DISH,
     DESSERT,
     APPETIZER,
     SALAD,
@@ -13,5 +13,6 @@ public enum MealType {
     SAUCE,
     FINGER_FOOD,
     DRINK,
+    SNACK,
     NONE
 }

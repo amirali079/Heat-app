@@ -5,8 +5,8 @@ import lombok.Value;
 @Value
 public class DayPlan {
 
-    FoodSummeryModel breakFast;
-    FoodSummeryModel lunch;
-    FoodSummeryModel snack;
-    FoodSummeryModel dinner;
+    FoodSummaryModel breakFast;
+    FoodSummaryModel lunch;
+    FoodSummaryModel snack;
+    FoodSummaryModel dinner;
 }

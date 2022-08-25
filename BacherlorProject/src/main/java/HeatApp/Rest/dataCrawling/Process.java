@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -19,9 +20,10 @@ public class Process {
     @Autowired
     private RestTemplate restTemplate;
 
-   // @PostConstruct
-    public void process() throws InterruptedException {
+   //@PostConstruct
+    public void process() throws InterruptedException, IOException {
 
+      // f403();
       //  readIds();
       //  readData();
 
@@ -140,5 +142,31 @@ public class Process {
            e.printStackTrace();
        }
     }
+
+    void f403() throws IOException {
+        Gson gson = new Gson();
+        ResponseEntity response = RestService.getData(restTemplate,"657598","ebeca2bb544d48c9ba61d8f0f73425ef");
+
+        System.out.println(response.toString());
+        JsonElement element = gson.fromJson(response.getBody().toString(), JsonElement.class);
+
+        FileWriter ft ;
+        FileWriter fj ;
+
+
+        fj = new FileWriter(new File("./data/json/d403.json"));
+        ft = new FileWriter(new File("./data/txt/d403.txt"));
+//               fj = new FileWriter(new File("./data/d"+baseId+".json"));
+//               ft = new FileWriter(new File("./data/d"+baseId+".txt"));
+        fj.write(element.toString());
+        ft.write(element.toString());
+        fj.flush();
+        ft.flush();
+    }
+
+
+
+
+
 }
 
