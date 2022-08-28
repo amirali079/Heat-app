@@ -1,4 +1,4 @@
-package HeatApp.Rest.dataCrawling;
+package HeatApp.rest.dataCrawling;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
-import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.HashSet;
 import java.util.Scanner;

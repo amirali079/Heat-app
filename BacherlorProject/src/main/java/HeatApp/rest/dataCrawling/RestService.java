@@ -1,6 +1,6 @@
-package HeatApp.Rest.dataCrawling;
+package HeatApp.rest.dataCrawling;
 
-import HeatApp.Rest.RestTemplateUtil;
+import HeatApp.rest.RestTemplateUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;

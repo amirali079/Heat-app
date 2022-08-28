@@ -1,4 +1,4 @@
-package HeatApp.Rest.dataCrawling;
+package HeatApp.rest.dataCrawling;
 
 
 import HeatApp.model.Food;
@@ -36,12 +36,12 @@ public class DataAdder {
     private final NutrientRepository nutrientRepository;
     private final InstructionStepRepository instructionStepRepository;
 
-    @PostConstruct
+   // @PostConstruct
     private void process() throws FileNotFoundException, InterruptedException {
-        dataInputing();
+        dataInputting();
     }
 
-    private void dataInputing() throws FileNotFoundException, InterruptedException {
+    private void dataInputting() throws FileNotFoundException, InterruptedException {
 
 
         Gson gson = new Gson();
