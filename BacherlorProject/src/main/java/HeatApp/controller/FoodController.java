@@ -7,10 +7,7 @@ import HeatApp.service.FoodService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,17 +19,17 @@ public class FoodController {
 
     @GetMapping("/food/{id}")
     public ResponseEntity<FoodResponseModel> getFood(@PathVariable Integer id) {
-        return new ResponseEntity<>(foodService.getFoodInfo(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(foodService.getFoodInfo(id), HttpStatus.OK);
     }
 
     @GetMapping("/foodSummery/{id}")
     public ResponseEntity<FoodSummaryModel> getFoodSummery(@PathVariable Integer id) {
-        return new ResponseEntity<>(foodService.getFoodSummeryInfo(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(foodService.getFoodSummeryInfo(id), HttpStatus.OK);
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<List<FoodSummaryModel>> getFoodLikes(@RequestBody SearchRequestModel searchRequestModel){
-        return new ResponseEntity<>(foodService.findFood(searchRequestModel),HttpStatus.FOUND);
+        return new ResponseEntity<>(foodService.findFood(searchRequestModel),HttpStatus.OK);
     }
 
 }

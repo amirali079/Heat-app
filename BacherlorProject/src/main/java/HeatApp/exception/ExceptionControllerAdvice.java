@@ -17,7 +17,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(UsernameExistException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseEntity<String> usernameExistHandler(UsernameExistException exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
     @ExceptionHandler(InvalidPasswordException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)

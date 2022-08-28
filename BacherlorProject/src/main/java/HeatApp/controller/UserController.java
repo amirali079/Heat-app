@@ -3,9 +3,7 @@ package HeatApp.controller;
 import HeatApp.model.requestModel.UserPreferenceRequestModel;
 import HeatApp.model.requestModel.UserLoginRequestModel;
 import HeatApp.model.requestModel.UserRegisterRequestModel;
-import HeatApp.model.responseModel.DayPlan;
-import HeatApp.model.responseModel.FoodSummaryModel;
-import HeatApp.model.responseModel.IsLikedResponseModel;
+import HeatApp.model.responseModel.*;
 import HeatApp.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,22 +19,22 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/user/register")
-    public ResponseEntity<Integer> saveUser(@RequestBody UserRegisterRequestModel userRegisterRequestModel) {
+    public ResponseEntity<UserResponseModel> saveUser(@RequestBody UserRegisterRequestModel userRegisterRequestModel) {
         return new ResponseEntity<>(userService.addUser(userRegisterRequestModel), HttpStatus.CREATED);
     }
 
-    @PutMapping("/user/login")
-    public ResponseEntity<Integer> loginUser(@RequestBody UserLoginRequestModel userLoginRequestModel) {
+    @PostMapping("/user/login")
+    public ResponseEntity<UserResponseModel> loginUser(@RequestBody UserLoginRequestModel userLoginRequestModel) {
         return new ResponseEntity<>( userService.loginUser(userLoginRequestModel), HttpStatus.OK);
     }
 
     @PostMapping("/user/addInfo")
-    public ResponseEntity<Integer> saveUserPreference(@RequestBody UserPreferenceRequestModel userPreferenceRequestModel) {
+    public ResponseEntity<UserResponseModel> saveUserPreference(@RequestBody UserPreferenceRequestModel userPreferenceRequestModel) {
         return new ResponseEntity<>(userService.addUserPreference(userPreferenceRequestModel), HttpStatus.CREATED);
     }
 
     @PatchMapping ("/user/{userId}/food/{foodId}/like")
-    public ResponseEntity<String> likeFood(@PathVariable Integer userId,@PathVariable Integer foodId) {
+    public ResponseEntity<LikeResponseModel> likeFood(@PathVariable Integer userId, @PathVariable Integer foodId) {
         return new ResponseEntity<>(userService.likeFood(userId,foodId), HttpStatus.OK);
     }
 
@@ -45,9 +43,14 @@ public class UserController {
         return new ResponseEntity<>(userService.isLikedFood(userId,foodId),HttpStatus.OK);
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<UserPreferenceResponseModel> getUserPreference(@PathVariable Integer id){
+        return new ResponseEntity<>(userService.getUserPreference(id),HttpStatus.OK);
+    }
+
     @GetMapping("/user/{id}/foodLikes")
     public ResponseEntity<List<FoodSummaryModel>> getFoodLikes(@PathVariable Integer id){
-        return new ResponseEntity<>(userService.getFoodLikes(id),HttpStatus.FOUND);
+        return new ResponseEntity<>(userService.getFoodLikes(id),HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}/generatePlan/{day}")

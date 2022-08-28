@@ -1,4 +1,4 @@
-package HeatApp.Rest;
+package HeatApp.rest;
 
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;

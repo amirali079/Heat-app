@@ -1,4 +1,4 @@
-package HeatApp.Rest;
+package HeatApp.rest;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

@@ -1,16 +1,17 @@
-package HeatApp.model.requestModel;
+package HeatApp.model.responseModel;
 
 import HeatApp.model.enums.*;
 import lombok.Value;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Set;
 
 @Value
-public class UserPreferenceRequestModel {
-
-    Integer id;
-
+public class UserPreferenceResponseModel {
     String name;
+
     Double weight;
     Double height;
     Integer age;
