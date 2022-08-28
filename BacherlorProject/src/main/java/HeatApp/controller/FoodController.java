@@ -27,6 +27,7 @@ public class FoodController {
         return new ResponseEntity<>(foodService.getFoodSummeryInfo(id), HttpStatus.OK);
     }
 
+    // this api is wrong, search api must be Get method and have not body !(search parameter must be in path)
     @PostMapping("/search")
     public ResponseEntity<List<FoodSummaryModel>> getFoodLikes(@RequestBody SearchRequestModel searchRequestModel){
         return new ResponseEntity<>(foodService.findFood(searchRequestModel),HttpStatus.OK);

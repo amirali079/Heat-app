@@ -17,7 +17,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-
+// This program has a security problem because it does not use any authentication mechanism for requests.
     @PostMapping("/user/register")
     public ResponseEntity<UserResponseModel> saveUser(@RequestBody UserRegisterRequestModel userRegisterRequestModel) {
         return new ResponseEntity<>(userService.addUser(userRegisterRequestModel), HttpStatus.CREATED);
