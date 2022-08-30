@@ -6,9 +6,9 @@ import HeatApp.exception.UsernameExistException;
 import HeatApp.model.Food;
 import HeatApp.model.User;
 import HeatApp.model.UserPreference;
-import HeatApp.model.requestModel.UserLoginRequestModel;
-import HeatApp.model.requestModel.UserPreferenceRequestModel;
-import HeatApp.model.requestModel.UserRegisterRequestModel;
+import HeatApp.model.requestModel.UserLoginRequest;
+import HeatApp.model.requestModel.UserPreferenceRequest;
+import HeatApp.model.requestModel.UserRegisterRequest;
 import HeatApp.model.responseModel.*;
 import HeatApp.repository.FoodRepository;
 import HeatApp.repository.UserRepository;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private final FoodRepository foodRepository;
 
     @Override
-    public UserResponseModel addUser(UserRegisterRequestModel user) {
+    public UserResponse addUser(UserRegisterRequest user) {
         Optional<User> loaded = userRepository.findByUsername(user.getUsername());
         if (loaded.isPresent())
             throw new UsernameExistException(user.getUsername());
@@ -38,21 +38,21 @@ public class UserServiceImpl implements UserService {
         User createdUser = User.builder().username(user.getUsername()).password(user.getPassword())
                 .email(user.getEmail()).build();
 
-        return new UserResponseModel(userRepository.save(createdUser).getId());
+        return new UserResponse(userRepository.save(createdUser).getId());
     }
 
     @Override
-    public UserResponseModel loginUser(UserLoginRequestModel user) {
+    public UserResponse loginUser(UserLoginRequest user) {
         Optional<User> loaded = userRepository.findByUsername(user.getUsername());
         if (loaded.isEmpty())
             throw new EntityNotFoundException(User.class.getName(), user.getUsername());
         if (!loaded.get().getPassword().equals(user.getPassword()))
             throw new InvalidPasswordException();
-        return new UserResponseModel(loaded.get().getId());
+        return new UserResponse(loaded.get().getId());
     }
 
     @Override
-    public UserResponseModel addUserPreference(UserPreferenceRequestModel user) {
+    public UserResponse addUserPreference(UserPreferenceRequest user) {
         User userLoaded = checkUserId(user.getId());
 
         UserPreference userPreference = UserPreference.builder()
@@ -64,22 +64,22 @@ public class UserServiceImpl implements UserService {
         userLoaded.setUserPreference(userPreference);
         userRepository.save(userLoaded);
 
-        return new UserResponseModel(user.getId());
+        return new UserResponse(user.getId());
     }
 
     @Override
-    public LikeResponseModel likeFood(Integer userId, Integer foodId) {
+    public LikeResponse likeFood(Integer userId, Integer foodId) {
 
         User user = checkUserId(userId);
         Food food = checkFoodId(foodId);
 
         Set<Food> likedFood = user.getLikedFoods();
 
-        LikeResponseModel status = new LikeResponseModel("liked!");
+        LikeResponse status = new LikeResponse("liked!");
 
         if (likedFood.contains(food)) {
             likedFood.remove(food);
-            status = new LikeResponseModel("unLiked!");
+            status = new LikeResponse("unLiked!");
         } else likedFood.add(food);
 
         user.setLikedFoods(likedFood);
@@ -89,25 +89,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public IsLikedResponseModel isLikedFood(Integer userId, Integer foodId) {
+    public IsLikedResponse isLikedFood(Integer userId, Integer foodId) {
         User user = checkUserId(userId);
         Food food = checkFoodId(foodId);
 
         if (user.getLikedFoods().contains(food))
-            return new IsLikedResponseModel(true);
-        return new IsLikedResponseModel(false);
+            return new IsLikedResponse(true);
+        return new IsLikedResponse(false);
     }
 
     @Override
-    public List<FoodSummaryModel> getFoodLikes(Integer userId) {
+    public List<FoodSummary> getFoodLikes(Integer userId) {
         User user = checkUserId(userId);
-        List<FoodSummaryModel> foods = new ArrayList<>();
+        List<FoodSummary> foods = new ArrayList<>();
         user.getLikedFoods().forEach(food -> foods.add(food.summeryModel()));
         return foods;
     }
 
     @Override
-    public UserPreferenceResponseModel getUserPreference(Integer userId) {
+    public UserPreferenceResponse getUserPreference(Integer userId) {
         User user = checkUserId(userId);
 
         return user.getUserPreference().responseModel();

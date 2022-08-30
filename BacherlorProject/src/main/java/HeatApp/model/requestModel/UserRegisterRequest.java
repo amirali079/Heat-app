@@ -3,7 +3,7 @@ package HeatApp.model.requestModel;
 import lombok.Value;
 
 @Value
-public class UserRegisterRequestModel {
+public class UserRegisterRequest {
 
      String username;
      String email;

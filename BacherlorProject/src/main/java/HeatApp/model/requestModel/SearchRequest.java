@@ -6,7 +6,7 @@ import HeatApp.model.enums.MealType;
 import lombok.Value;
 
 @Value
-public class SearchRequestModel {
+public class SearchRequest {
 
     String keyword;
     Double minCalorie;

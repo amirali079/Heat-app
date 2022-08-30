@@ -1,14 +1,18 @@
 package HeatApp.rest.dataCrawling;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
-import java.io.*;
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -19,13 +23,65 @@ public class Process {
     @Autowired
     private RestTemplate restTemplate;
 
-   //@PostConstruct
+    @PostConstruct
     public void process() throws InterruptedException, IOException {
 
-      // f403();
-      //  readIds();
-      //  readData();
+       // searchData();
+        // f403();
+        //  readIds();
+        //  readData();
 
+    }
+
+    void searchData() throws IOException {
+
+        Scanner sc = new Scanner(new File("./data/idsss.txt"));
+        Set<String> readId = new HashSet<>();
+
+        while (sc.hasNextLine())
+            readId.add(sc.nextLine());
+
+        System.out.println("___"+readId.size());
+
+        sc.close();
+
+        sc = new Scanner(new File("./data/ids.txt"));
+
+        while (sc.hasNextLine())
+            readId.add(sc.nextLine());
+
+        sc.close();
+
+        System.out.println("___"+readId.size());
+
+        Set<String> ids = new HashSet<>();
+        Gson gson = new Gson();
+
+
+        for (int i = 0; i < 1; i++) {
+            ResponseEntity response = RestService.searchData(restTemplate, "water", "23d0487d24d441d696cdf478b2113dff", i * 100);
+
+            System.out.println(response.toString());
+            JsonElement element = gson.fromJson(response.getBody().toString(), JsonElement.class);
+            JsonArray results = (JsonArray) element.getAsJsonObject().get("results");
+
+            for (JsonElement object : results)
+                ids.add(object.getAsJsonObject().get("id").getAsString());
+        }
+
+        System.out.println(readId.size());
+
+        System.out.println("________________before: " + ids.size());
+
+        ids.removeIf(id -> !readId.contains(id));
+
+        System.out.println("________________after: " + ids.size());
+
+        FileWriter f = new FileWriter(new File("./data/idsss.txt"),true);
+        for (String id : ids){
+            f.write(id+"\n");
+        }
+        f.flush();
     }
 
     void readData() throws InterruptedException {
@@ -34,7 +90,7 @@ public class Process {
         try {
             Scanner sc = new Scanner(new File("ids9.txt"));
 
-            for (int i = 1; i <=100 ; i++)
+            for (int i = 1; i <= 100; i++)
                 ids.add(sc.nextLine());
             sc.close();
             System.out.println(ids.size());
@@ -50,35 +106,35 @@ public class Process {
         for (String id : ids) {
 
 
-            ResponseEntity response = RestService.getData(restTemplate,id,"ebeca2bb544d48c9ba61d8f0f73425ef");
+            ResponseEntity response = RestService.getData(restTemplate, id, "ebeca2bb544d48c9ba61d8f0f73425ef");
 
             System.out.println(response.toString());
             JsonElement element = gson.fromJson(response.getBody().toString(), JsonElement.class);
 
-            System.out.println(ind+++" ++ "+element.toString());
-                data.add(element.toString());
+            System.out.println(ind++ + " ++ " + element.toString());
+            data.add(element.toString());
 
-                Thread.sleep(1100);
+            Thread.sleep(1100);
         }
 
         try {
             Integer baseId = 801;
-            FileWriter ft ;
-            FileWriter fj ;
+            FileWriter ft;
+            FileWriter fj;
 
-            for (String d:data) {
+            for (String d : data) {
 
-               fj = new FileWriter(new File("./data/json/d"+baseId+".json"));
-               ft = new FileWriter(new File("./data/txt/d"+baseId+".txt"));
+                fj = new FileWriter(new File("./data/json/d" + baseId + ".json"));
+                ft = new FileWriter(new File("./data/txt/d" + baseId + ".txt"));
 //               fj = new FileWriter(new File("./data/d"+baseId+".json"));
 //               ft = new FileWriter(new File("./data/d"+baseId+".txt"));
-               fj.write(d);
-               ft.write(d);
-               baseId++;
-               fj.flush();
-               ft.flush();
+                fj.write(d);
+                ft.write(d);
+                baseId++;
+                fj.flush();
+                ft.flush();
             }
-          //  for (JsonElement )
+            //  for (JsonElement )
 
 
         } catch (IOException e) {
@@ -89,8 +145,8 @@ public class Process {
     }
 
 
-    void readIds(){
-       System.out.println("===================================");
+    void readIds() {
+        System.out.println("===================================");
 //       Set<String> ids = new HashSet<>();
 //       Gson gson = new Gson();
 //
@@ -110,47 +166,47 @@ public class Process {
 //
 //       System.out.println(ids.toString());
 
-       try {
-           Scanner sc = new Scanner(new File("ids.txt"));
-           Set<String> readId = new HashSet<>();
+        try {
+            Scanner sc = new Scanner(new File("ids.txt"));
+            Set<String> readId = new HashSet<>();
 
-           for (int i = 0; i <900 ; i++)
-               readId.add(sc.nextLine());
+            for (int i = 0; i < 900; i++)
+                readId.add(sc.nextLine());
 
-           System.out.println(readId.size()+" --- "+readId.toString());
+            System.out.println(readId.size() + " --- " + readId.toString());
 
-           int  index = 0;
-           int indexFile = 1;
-           FileWriter f =  new FileWriter(new File("ids"+indexFile+".txt"));
-           for (String id : readId) {
-               if (index == 100){
-                   f.flush();
-                   f.close();
+            int index = 0;
+            int indexFile = 1;
+            FileWriter f = new FileWriter(new File("ids" + indexFile + ".txt"));
+            for (String id : readId) {
+                if (index == 100) {
+                    f.flush();
+                    f.close();
 
-                   index=0;
-                   indexFile++;
+                    index = 0;
+                    indexFile++;
 
-                   f =  new FileWriter(new File("ids"+indexFile+".txt"));
-               }
-               f.write(id+"\n");
-               index++;
-           }
+                    f = new FileWriter(new File("ids" + indexFile + ".txt"));
+                }
+                f.write(id + "\n");
+                index++;
+            }
 
-           System.out.println("__________end_________");
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
+            System.out.println("__________end_________");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void f403() throws IOException {
         Gson gson = new Gson();
-        ResponseEntity response = RestService.getData(restTemplate,"657598","ebeca2bb544d48c9ba61d8f0f73425ef");
+        ResponseEntity response = RestService.getData(restTemplate, "657598", "ebeca2bb544d48c9ba61d8f0f73425ef");
 
         System.out.println(response.toString());
         JsonElement element = gson.fromJson(response.getBody().toString(), JsonElement.class);
 
-        FileWriter ft ;
-        FileWriter fj ;
+        FileWriter ft;
+        FileWriter fj;
 
 
         fj = new FileWriter(new File("./data/json/d403.json"));
@@ -162,9 +218,6 @@ public class Process {
         fj.flush();
         ft.flush();
     }
-
-
-
 
 
 }

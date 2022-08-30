@@ -10,7 +10,7 @@ import lombok.Value;
 import java.util.Set;
 
 @Value
-public class FoodResponseModel {
+public class FoodResponse {
 
      Boolean veryHealthy;
      String title;

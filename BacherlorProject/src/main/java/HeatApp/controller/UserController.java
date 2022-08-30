@@ -1,8 +1,8 @@
 package HeatApp.controller;
 
-import HeatApp.model.requestModel.UserPreferenceRequestModel;
-import HeatApp.model.requestModel.UserLoginRequestModel;
-import HeatApp.model.requestModel.UserRegisterRequestModel;
+import HeatApp.model.requestModel.UserPreferenceRequest;
+import HeatApp.model.requestModel.UserLoginRequest;
+import HeatApp.model.requestModel.UserRegisterRequest;
 import HeatApp.model.responseModel.*;
 import HeatApp.service.UserService;
 import lombok.AllArgsConstructor;
@@ -19,37 +19,37 @@ public class UserController {
     private final UserService userService;
 // This program has a security problem because it does not use any authentication mechanism for requests.
     @PostMapping("/user/register")
-    public ResponseEntity<UserResponseModel> saveUser(@RequestBody UserRegisterRequestModel userRegisterRequestModel) {
-        return new ResponseEntity<>(userService.addUser(userRegisterRequestModel), HttpStatus.CREATED);
+    public ResponseEntity<UserResponse> saveUser(@RequestBody UserRegisterRequest userRegisterRequest) {
+        return new ResponseEntity<>(userService.addUser(userRegisterRequest), HttpStatus.CREATED);
     }
 
     @PostMapping("/user/login")
-    public ResponseEntity<UserResponseModel> loginUser(@RequestBody UserLoginRequestModel userLoginRequestModel) {
-        return new ResponseEntity<>( userService.loginUser(userLoginRequestModel), HttpStatus.OK);
+    public ResponseEntity<UserResponse> loginUser(@RequestBody UserLoginRequest userLoginRequest) {
+        return new ResponseEntity<>( userService.loginUser(userLoginRequest), HttpStatus.OK);
     }
 
     @PostMapping("/user/addInfo")
-    public ResponseEntity<UserResponseModel> saveUserPreference(@RequestBody UserPreferenceRequestModel userPreferenceRequestModel) {
-        return new ResponseEntity<>(userService.addUserPreference(userPreferenceRequestModel), HttpStatus.CREATED);
+    public ResponseEntity<UserResponse> saveUserPreference(@RequestBody UserPreferenceRequest userPreferenceRequest) {
+        return new ResponseEntity<>(userService.addUserPreference(userPreferenceRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping ("/user/{userId}/food/{foodId}/like")
-    public ResponseEntity<LikeResponseModel> likeFood(@PathVariable Integer userId, @PathVariable Integer foodId) {
+    public ResponseEntity<LikeResponse> likeFood(@PathVariable Integer userId, @PathVariable Integer foodId) {
         return new ResponseEntity<>(userService.likeFood(userId,foodId), HttpStatus.OK);
     }
 
     @GetMapping ("/user/{userId}/food/{foodId}/isLiked")
-    public ResponseEntity<IsLikedResponseModel> isLikedFood(@PathVariable Integer userId, @PathVariable Integer foodId) {
+    public ResponseEntity<IsLikedResponse> isLikedFood(@PathVariable Integer userId, @PathVariable Integer foodId) {
         return new ResponseEntity<>(userService.isLikedFood(userId,foodId),HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<UserPreferenceResponseModel> getUserPreference(@PathVariable Integer id){
+    public ResponseEntity<UserPreferenceResponse> getUserPreference(@PathVariable Integer id){
         return new ResponseEntity<>(userService.getUserPreference(id),HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}/foodLikes")
-    public ResponseEntity<List<FoodSummaryModel>> getFoodLikes(@PathVariable Integer id){
+    public ResponseEntity<List<FoodSummary>> getFoodLikes(@PathVariable Integer id){
         return new ResponseEntity<>(userService.getFoodLikes(id),HttpStatus.OK);
     }
 

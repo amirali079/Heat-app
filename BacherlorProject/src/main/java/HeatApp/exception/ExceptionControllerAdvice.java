@@ -15,7 +15,7 @@ public class ExceptionControllerAdvice {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(UsernameExistException.class)
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<String> usernameExistHandler(UsernameExistException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }

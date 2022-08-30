@@ -1,26 +1,25 @@
 package HeatApp.service;
 
-import HeatApp.model.UserPreference;
-import HeatApp.model.requestModel.UserPreferenceRequestModel;
+import HeatApp.model.requestModel.UserPreferenceRequest;
 import HeatApp.model.responseModel.*;
-import HeatApp.model.requestModel.UserLoginRequestModel;
-import HeatApp.model.requestModel.UserRegisterRequestModel;
+import HeatApp.model.requestModel.UserLoginRequest;
+import HeatApp.model.requestModel.UserRegisterRequest;
 
 import java.util.List;
 
 public interface UserService {
 
-    UserResponseModel addUser(UserRegisterRequestModel user);
-    UserResponseModel loginUser(UserLoginRequestModel user);
+    UserResponse addUser(UserRegisterRequest user);
+    UserResponse loginUser(UserLoginRequest user);
 
-    UserResponseModel addUserPreference(UserPreferenceRequestModel user);
-    UserPreferenceResponseModel getUserPreference(Integer userId);
+    UserResponse addUserPreference(UserPreferenceRequest user);
+    UserPreferenceResponse getUserPreference(Integer userId);
 
-    LikeResponseModel likeFood(Integer userId, Integer foodId);
+    LikeResponse likeFood(Integer userId, Integer foodId);
 
-    IsLikedResponseModel isLikedFood(Integer userId, Integer foodId);
+    IsLikedResponse isLikedFood(Integer userId, Integer foodId);
 
-    List<FoodSummaryModel> getFoodLikes(Integer userId);
+    List<FoodSummary> getFoodLikes(Integer userId);
 
     List<DayPlan> generatePlan(Integer userId, Integer day);
 }

@@ -3,8 +3,8 @@ package HeatApp.model;
 import HeatApp.model.enums.Cuisine;
 import HeatApp.model.enums.DietType;
 import HeatApp.model.enums.MealType;
-import HeatApp.model.responseModel.FoodResponseModel;
-import HeatApp.model.responseModel.FoodSummaryModel;
+import HeatApp.model.responseModel.FoodResponse;
+import HeatApp.model.responseModel.FoodSummary;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -60,12 +60,12 @@ public class Food {
     @OneToMany
     private Set<Nutrient> nutrients;
 
-    public FoodResponseModel responseModel() {
-        return new FoodResponseModel(veryHealthy, title, readyInMinute, summary, imageLink, cuisines, mealTypes, dietTypes,
+    public FoodResponse responseModel() {
+        return new FoodResponse(veryHealthy, title, readyInMinute, summary, imageLink, cuisines, mealTypes, dietTypes,
                 instructionSteps, ingredients, nutrients);
     }
 
-    public FoodSummaryModel summeryModel(){
-        return new FoodSummaryModel(id,title,readyInMinute,imageLink,LocalDate.now(),nutrients,dietTypes,cuisines,mealTypes);
+    public FoodSummary summeryModel(){
+        return new FoodSummary(id,title,readyInMinute,imageLink,LocalDate.now(),nutrients,dietTypes,cuisines,mealTypes);
     }
 }

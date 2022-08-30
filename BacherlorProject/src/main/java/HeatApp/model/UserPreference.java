@@ -1,7 +1,7 @@
 package HeatApp.model;
 
 import HeatApp.model.enums.*;
-import HeatApp.model.responseModel.UserPreferenceResponseModel;
+import HeatApp.model.responseModel.UserPreferenceResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -53,8 +53,8 @@ public class UserPreference {
     @Enumerated(EnumType.STRING)
     private Set<Disease> diseases;
 
-    public UserPreferenceResponseModel responseModel(){
-        return new UserPreferenceResponseModel(name,weight,height,age,gender,activeLevel,abstractGoal,dietType,ingredientAllergies,diseases);
+    public UserPreferenceResponse responseModel(){
+        return new UserPreferenceResponse(name,weight,height,age,gender,activeLevel,abstractGoal,dietType,ingredientAllergies,diseases);
     }
 
 

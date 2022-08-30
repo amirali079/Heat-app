@@ -1,16 +1,16 @@
 package HeatApp.service;
 
-import HeatApp.model.requestModel.SearchRequestModel;
-import HeatApp.model.responseModel.FoodResponseModel;
-import HeatApp.model.responseModel.FoodSummaryModel;
+import HeatApp.model.requestModel.SearchRequest;
+import HeatApp.model.responseModel.FoodResponse;
+import HeatApp.model.responseModel.FoodSummary;
 
 import java.util.List;
 
 public interface FoodService {
 
-    FoodResponseModel getFoodInfo(Integer id);
-    FoodSummaryModel getFoodSummeryInfo(Integer id);
+    FoodResponse getFoodInfo(Integer id);
+    FoodSummary getFoodSummeryInfo(Integer id);
 
-    List<FoodSummaryModel> findFood(SearchRequestModel searchRequestModel);
+    List<FoodSummary> findFood(SearchRequest searchRequest);
 
 }

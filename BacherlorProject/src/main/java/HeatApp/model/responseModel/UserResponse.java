@@ -3,7 +3,6 @@ package HeatApp.model.responseModel;
 import lombok.Value;
 
 @Value
-public class IsLikedResponseModel {
-    Boolean isLiked;
-
+public class UserResponse {
+    Integer id;
 }

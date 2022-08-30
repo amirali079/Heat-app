@@ -27,5 +27,12 @@ public class RestService {
         return RestTemplateUtil.createGet(restTemplate, NETWORK_URI,"", String .class);
     }
 
+    public static ResponseEntity<String> searchData(RestTemplate restTemplate, String keyword,String key,Integer offset) {
+
+        String NETWORK_URI = String.format("https://api.spoonacular.com/recipes/complexSearch?apiKey=%s&number=100&offset=%d&query=%s",key,offset,keyword);
+
+        return RestTemplateUtil.createGet(restTemplate, NETWORK_URI,"", String .class);
+    }
+
 
 }
