@@ -73,8 +73,8 @@ public class FoodServiceImpl implements FoodService{
         if (!request.getKeyword().equals(""))
          foods.removeIf(f->(!f.getTitle().contains(request.getKeyword())));
 
-        if (foods.isEmpty())
-            throw new EntityNotFoundException(Food.class.getName(),"none");
+//        if (foods.isEmpty())
+//            throw new EntityNotFoundException(Food.class.getName(),"none");
 
         return foods;
     }

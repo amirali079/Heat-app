@@ -16,10 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -139,6 +136,15 @@ public class UserServiceImpl implements UserService {
 
     private DayPlan generatePlan(User user) {
         //todo Clustering
-        return null;
+
+        List<Food> foods = new ArrayList<>();
+        foodRepository.findAll().forEach(foods::add);
+        Random random = new Random();
+
+        return new DayPlan(
+                foods.get(random.nextInt(900)).summeryModel(),
+                foods.get(random.nextInt(900)).summeryModel(),
+                foods.get(random.nextInt(900)).summeryModel(),
+                foods.get(random.nextInt(900)).summeryModel());
     }
 }
