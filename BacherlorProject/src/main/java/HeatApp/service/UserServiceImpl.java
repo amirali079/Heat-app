@@ -15,6 +15,7 @@ import HeatApp.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
@@ -25,6 +26,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final FoodRepository foodRepository;
+
+    private final RestTemplate restTemplate;
 
     @Override
     public UserResponse addUser(UserRegisterRequest user) {

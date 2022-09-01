@@ -14,7 +14,7 @@ public class FoodSummary {
 
 
     public FoodSummary(Integer id, String title, String readyInMinute, String imageLink, LocalDate localDate,
-                       Set<Nutrient> nutrients, Set<DietType> dietTypes, Set<Cuisine> cuisines, Set<MealType> mealTypes) {
+                       Set<Nutrient> nutrients, Set<DietType> dietTypes, Set<Cuisine> cuisines, Set<MealType> mealTypes, String mealLabel) {
         this.id = id;
         this.title = title;
         this.readyInMinute = readyInMinute;
@@ -23,6 +23,7 @@ public class FoodSummary {
         this.dietTypes = dietTypes;
         this.cuisines = cuisines;
         this.mealTypes = mealTypes;
+        this.mealLabel = mealLabel;
 
         this.eaten = false;
 
@@ -65,6 +66,7 @@ public class FoodSummary {
     Set<DietType> dietTypes;
     Set<Cuisine> cuisines;
     Set<MealType> mealTypes;
+    String mealLabel;
 
 }
 

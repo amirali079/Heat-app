@@ -66,6 +66,6 @@ public class Food {
     }
 
     public FoodSummary summeryModel(){
-        return new FoodSummary(id,title,readyInMinute,imageLink,LocalDate.now(),nutrients,dietTypes,cuisines,mealTypes);
+        return new FoodSummary(id,title,readyInMinute,imageLink,LocalDate.now(),nutrients,dietTypes,cuisines,mealTypes, "");
     }
 }
